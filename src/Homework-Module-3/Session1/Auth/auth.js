@@ -1,4 +1,4 @@
-var client_id = '9cf84f79755f46bab22ab96acb78db0f';
+var client_id = process.env.REACT_APP_SPOTIFY_ID;
 var redirect_uri = 'http://localhost:3000/callback';
 
 

@@ -2,25 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import url from './Auth/auth';
 import "./index.css"
-
-
-const Data = ({ artist, track, url, webp, releaseDate}) => (
-  <div className='depan'>
-    <div className='bagan'>
-    <img src={url} />
-    <h2>{artist}</h2>
-    <h3>{track}</h3>
-    <h4>{releaseDate}</h4>
-    <a className='tanda' href={webp}>Link</a>
-    </div>
-  </div>
-);
-
+import Data from './pages/Data';
 
 
 function Module3Session1() {
   const [search , setSearch] = useState("")
   const [tracks , setTrack] = useState([])
+  const [selectedTrack, setSelectedTrack] = useState([]);
 
   function getQueryParams(string) {
     const queries = string.substring(1).split('&');
@@ -55,7 +43,31 @@ const query = getQueryParams(window.location.hash)
     })
   }
 
+const addData = (id) => {
+    const selectedSong = selectedTrack;
+    selectedSong.push(id);
+    setSelectedTrack(selectedSong);
+}
 
+const removeData = (id) => {
+    const selectedSong = selectedTrack;
+    for (let i = 0; i < selectedTrack.length; i++) {
+        if (selectedTrack[i] === id) {
+            selectedSong.splice(i, 1);
+        }
+    }
+    setSelectedTrack(selectedSong);
+}
+
+const statusData = (id) => {
+    let status = false;
+    for (let i = 0; i < selectedTrack.length; i++) {
+        if (selectedTrack[i] === id) {
+            status = true;
+        }
+    }
+    return status;
+}
 
   return (
     <>
@@ -66,13 +78,28 @@ const query = getQueryParams(window.location.hash)
         <input className='cari' onChange={handleChange} type="text"/>
         <input className='tombol' type="submit" onClick={handleSubmit} />
         </div>
-        {tracks.map((data) => 
-        <Data track={data.album.name} artist={data.album.artists[0].name}
-        releaseDate = {data.album.release_date}
-        url={data.album.images[0].url}
-        webp={data.album.external_urls.spotify}
-        />
-        )}
+        <div>
+        {tracks.map((data) => {
+          const status = statusData(data.uri);
+          return(
+            <Data 
+            key = {data.uri}
+            track={data.name} 
+            album={data.album.name} 
+            artist={data.album.artists[0].name}
+            releaseDate = {data.album.release_date}
+            url={data.album.images[0].url}
+            id={data.uri}
+            statusSelect={status}
+            click={addData}
+            unclick={removeData}
+            />
+          )
+          }
+          )
+        }
+        </div>
+        
     </>
   )
 }
