@@ -1,18 +1,8 @@
 import { useState } from "react"
 
-const Data = ({ artist, track, url, releaseDate,album,statusSelect, click, unclick, id}) => {
-    const [tombol, setTombol] = useState(statusSelect)
+const Data = ({ artist, track, url, releaseDate,album,statusSelect, uri,isSelected, id}) => {
 
-    const handleClick = () =>{
-      setTombol(!tombol)
 
-      if (tombol) {
-        unclick(id)
-      } else {
-        click(id)
-      }
-    }
-  
   
     return(
     <div className='depan'>
@@ -22,8 +12,7 @@ const Data = ({ artist, track, url, releaseDate,album,statusSelect, click, uncli
       <h3>{track}</h3>
       <h3>{album}</h3>
       <h4>{releaseDate}</h4>
-      <button id={id} onClick={handleClick}>
-            {!tombol ? 'Select' : 'Deselect'}
+      <button id={id} onClick={()=>{statusSelect(uri)}}> {isSelected? 'Deselect' : 'Select'}
         </button>
       </div>
     </div>

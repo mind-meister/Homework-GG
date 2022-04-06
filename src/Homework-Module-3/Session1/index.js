@@ -1,6 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import url from './Auth/auth';
+import { getUserProfile } from './Form';
+import FormPlaylist from './Form/FormPlaylist';
 import "./index.css"
 import Data from './pages/Data';
 
@@ -8,28 +10,68 @@ import Data from './pages/Data';
 function Module3Session1() {
   const [search , setSearch] = useState("")
   const [tracks , setTrack] = useState([])
-  const [selectedTrack, setSelectedTrack] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [token, setToken] = useState("");
 
-  function getQueryParams(string) {
-    const queries = string.substring(1).split('&');
-    const finalObj = {};
-    queries.forEach(query=>{
-        const arr = query.split('=');
-        if(arr.length > 1 )
-            finalObj[arr[0]] = arr[1]
-    })
-    return finalObj;
-}
-const query = getQueryParams(window.location.hash)
+  const [accessToken, setAccessToken] = useState("");
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.hash);
+    const accessToken = params.get("#access_token");
+    setAccessToken(accessToken);
+    setToken(accessToken !== null);
+
+    if (accessToken !== null) {
+      setAccessToken(accessToken);
+      setToken(accessToken !== null);
+
+      const setUserProfile = async () => {
+        try {
+          const response = await getUserProfile(accessToken);
+
+          setUser(response);
+        } catch (e) {
+          alert(e);
+        }
+      };
+
+      setUserProfile();
+    }
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    let token = window.localStorage.getItem("token");
+
+    // AMBIL TOKEN
+    if (!token && hash) {
+      token = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
+
+      window.location.hash = "";
+      window.localStorage.setItem("token", token);
+    }
+
+    setToken(token);
+  }, []);
 
   const handleChange = (e) =>{
     setSearch(e.target.value)
   }
 
+  const logout = () => {
+    setToken("");
+    window.localStorage.removeItem("token");
+  };
+
   const handleSubmit = () => {
     axios.get('https://api.spotify.com/v1/search?',{
       headers: {
-        Authorization: `Bearer ${query.access_token}`
+        Authorization: `Bearer ${token}`
       },
       params: {
         q: search,
@@ -43,62 +85,69 @@ const query = getQueryParams(window.location.hash)
     })
   }
 
-const addData = (id) => {
-    const selectedSong = selectedTrack;
-    selectedSong.push(id);
-    setSelectedTrack(selectedSong);
-}
 
-const removeData = (id) => {
-    const selectedSong = selectedTrack;
-    for (let i = 0; i < selectedTrack.length; i++) {
-        if (selectedTrack[i] === id) {
-            selectedSong.splice(i, 1);
-        }
+  const handleSelected = (uri) => {
+    const alreadySelected = selected.find((selectedUri) => selectedUri === uri)
+    if(alreadySelected) {
+      const filteredTracks = selected.filter(
+        (selectedUri) => selectedUri !== uri
+      )
+      setSelected(filteredTracks)
+    } else {
+      setSelected([...selected, uri])
     }
-    setSelectedTrack(selectedSong);
-}
+  }
 
-const statusData = (id) => {
-    let status = false;
-    for (let i = 0; i < selectedTrack.length; i++) {
-        if (selectedTrack[i] === id) {
-            status = true;
-        }
-    }
-    return status;
-}
 
   return (
     <>
+        {!token ? (
         <div className='login-container'>
-        <a className='login' href={url}>Login</a>
+          <a className='login' href={url}>Login</a>
         </div>
+
+        ) : (
+          <button onClick={logout}>Logout</button>
+        )}
+
+        {token ? (
         <div className='tombol-search'>
-        <input className='cari' onChange={handleChange} type="text"/>
-        <input className='tombol' type="submit" onClick={handleSubmit} />
+          <input className='cari' onChange={handleChange} type="text"/>
+          <input className='tombol' type="submit" onClick={handleSubmit} />
         </div>
+
+        ) : (
+            <h2>Please Login</h2>
+        )}
+
+        <FormPlaylist accessToken={accessToken}
+            userId={user.id}
+            uris={selected} />
+
         <div>
         {tracks.map((data) => {
-          const status = statusData(data.uri);
+          const status = selected.find((selectedUri) => selectedUri === data.uri);
           return(
+            <>
             <Data 
-            key = {data.uri}
             track={data.name} 
             album={data.album.name} 
             artist={data.album.artists[0].name}
             releaseDate = {data.album.release_date}
             url={data.album.images[0].url}
             id={data.uri}
-            statusSelect={status}
-            click={addData}
-            unclick={removeData}
+            statusSelect={handleSelected}
+            isSelected={status}
+            uri = {data.uri}
             />
-          )
+            </>
+            )
           }
           )
         }
         </div>
+        
+        
         
     </>
   )
