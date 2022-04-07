@@ -1,30 +1,36 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import url from './Auth/auth';
 import { getUserProfile } from './Form';
 import FormPlaylist from './Form/FormPlaylist';
 import "./index.css"
 import Data from './pages/Data';
+import Login from './pages/Login';
+import Search from './pages/Search';
+import { setUserToken } from './Redux/Store/user';
 
 
-function Module3Session1() {
+function Homework() {
   const [search , setSearch] = useState("")
   const [tracks , setTrack] = useState([])
   const [selected, setSelected] = useState([]);
-  const [token, setToken] = useState("");
-
   const [accessToken, setAccessToken] = useState("");
   const [user, setUser] = useState({});
+  
+  const dispatch = useDispatch();
+  const user_token = useSelector(state => state.user.user_token);
+  const [setToken] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash);
     const accessToken = params.get("#access_token");
     setAccessToken(accessToken);
-    setToken(accessToken !== null);
+    setUserToken(accessToken !== null);
 
     if (accessToken !== null) {
       setAccessToken(accessToken);
-      setToken(accessToken !== null);
+      setUserToken(accessToken !== null);
 
       const setUserProfile = async () => {
         try {
@@ -42,22 +48,15 @@ function Module3Session1() {
 
   useEffect(() => {
     const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
+    window.location.hash = "";
 
     // AMBIL TOKEN
-    if (!token && hash) {
-      token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
+    if(!user_token && hash) {
+      const token = hash.split("&")[0].split("=")[1];
       window.localStorage.setItem("token", token);
-    }
-
-    setToken(token);
-  }, []);
+      dispatch(setUserToken(token))
+    }}, [user_token, dispatch]
+    );
 
   const handleChange = (e) =>{
     setSearch(e.target.value)
@@ -71,7 +70,7 @@ function Module3Session1() {
   const handleSubmit = () => {
     axios.get('https://api.spotify.com/v1/search?',{
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${user_token}`
       },
       params: {
         q: search,
@@ -101,28 +100,29 @@ function Module3Session1() {
 
   return (
     <>
-        {!token ? (
-        <div className='login-container'>
-          <a className='login' href={url}>Login</a>
+        <div>
+          
+        <Login
+        token={user_token}
+        logout={logout}
+        url={url}
+        />
         </div>
 
-        ) : (
-          <button onClick={logout}>Logout</button>
-        )}
-
-        {token ? (
-        <div className='tombol-search'>
-          <input className='cari' onChange={handleChange} type="text"/>
-          <input className='tombol' type="submit" onClick={handleSubmit} />
+        <div>
+        <Search
+        token={user_token}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        />
         </div>
 
-        ) : (
-            <h2>Please Login</h2>
-        )}
-
-        <FormPlaylist accessToken={accessToken}
-            userId={user.id}
-            uris={selected} />
+        <div>
+        <FormPlaylist 
+        accessToken={accessToken}
+        userId={user.id}
+        uris={selected} />
+        </div>
 
         <div>
         {tracks.map((data) => {
@@ -153,4 +153,4 @@ function Module3Session1() {
   )
 }
 
-export default Module3Session1
+export default Homework
