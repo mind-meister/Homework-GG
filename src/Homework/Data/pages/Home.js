@@ -74,7 +74,6 @@ function Home() {
               track={track.name}
               album={track.album.name}
               artist={track.album.artists[0].name}
-              releaseDate={track.album.release_date}
               url={track.album.images[0].url}
               statusSelect={() => handleSelected(track)}
               isSelected={status}
