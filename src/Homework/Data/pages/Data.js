@@ -1,4 +1,6 @@
-const Data = ({ artist, track, url, releaseDate,album,statusSelect, uri,isSelected}) => {
+import { Button } from "@mui/material"
+
+const Data = ({ artist, track, url,album,statusSelect, uri,isSelected}) => {
 
     return(
     <div className='container-tracks'>
@@ -15,7 +17,7 @@ const Data = ({ artist, track, url, releaseDate,album,statusSelect, uri,isSelect
 
             
             <div className="button-tracks">
-            <button onClick={()=>{statusSelect(uri)}}> {isSelected? 'Deselect' : 'Select'} </button>
+            <Button variant="contained" onClick={()=>{statusSelect(uri)}}> {isSelected? 'Deselect' : 'Select'} </Button>
             </div>
 
 

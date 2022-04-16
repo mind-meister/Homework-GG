@@ -1,3 +1,5 @@
+import { Button, FormControl, TextareaAutosize, TextField } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { addTracksToPlaylist, createPlaylist } from "../Redux/Store";
@@ -9,11 +11,14 @@ function FormPlaylist({urisTrack}) {
     title: "",
     description: "",
   });
+
+
   
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPlaylist({ ...playlist, [name]: value });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +33,6 @@ function FormPlaylist({urisTrack}) {
           await addTracksToPlaylist(userToken, responseCreatePlaylist.id, urisTrack);
           
           alert('Playlist created successfully');
-
           setPlaylist({ title: '', description: '' });
         } catch (error) {
           console.log(error, "Erorr");
@@ -44,39 +48,41 @@ function FormPlaylist({urisTrack}) {
     <>
     <form onSubmit={handleSubmit}>
       <div>
-
-        <div>
-          <h4>Create Playlist</h4>
-        </div>
-
         <div>
 
-          <div>
-            <p>Title</p>
-            <input
+          <Box p={1} width="100%">
+          <FormControl>
+            <h3>
+              Create A New playlist
+            </h3>
+          
+            <p>Playlist Title</p>
+            <TextField
               minLength={10}
               type="text"
               name="title"
               value={playlist.title}
               onChange={handleChange}
               required
-            />
-          </div>
-
-          <div>
+              />
+          
             <p>Description</p>
-            <textarea
+            <TextareaAutosize
               type="text"
               name="description"
               value={playlist.description}
-              onChange={handleChange}>
-              </textarea>
-          </div>
+              onChange={handleChange}
+              style={{ width: 210 }}
+              minRows={3}
+              >
+              </TextareaAutosize>
+              </FormControl>
+              </Box>
         </div>
 
-        <div>
-          <input type="submit" value={"Submit"} />
-        </div>
+        <Box  p={1} width="100%">
+          <Button size="small" sx={{ width: 210, textAlign: "center", borderRadius:10, background:"#4caf50" }} type="submit" variant="contained">Submit</Button>
+        </Box>
 
       </div>
     </form>

@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import url from "../Auth/auth";
@@ -18,11 +19,11 @@ function Login() {
     const userTokenParams = params.get("#access_token");
 
     if (userTokenParams !== null) {
-      console.log(userTokenParams);
+      console.log(userTokenParams)
       const setUserProfile = async () => {
         try {
           const responseUser = await getUserProfile(userTokenParams);
-            console.log(responseUser)
+          
           dispatch(
             setUserToken({
               userToken: userTokenParams,
@@ -44,9 +45,9 @@ function Login() {
       {!userToken ? (
         <div className="login-container">
           <h2>Please Login</h2>
-          <a className="login" href={url}>
+          <Button size="small" sx={{ width: "auto", textAlign: "center" }} type="submit" variant="contained" className="login" href={url}>
             Login
-          </a>
+          </Button>
         </div>
       ) : (
         <button onClick={logout}>Logout</button>

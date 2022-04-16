@@ -36,8 +36,8 @@ function Home() {
     setIsSearch(false);
   };
 
-  const toggleSelect = (track) => {
-    const uri = track.uri;
+  // const toggleSelect = (track) => {
+  //   const uri = track.uri;
 
     if (selectedTrackURI.includes(uri)) {
       setSelectedTrackURI(selectedTrackURI.filter((item) => item !== uri));
@@ -46,7 +46,7 @@ function Home() {
       setSelectedTrackURI([...selectedTrackURI, uri]);
       setSelectedTracks([...selectedTracks, track]);
     }
-  };
+  // };
   return (
     <>
       <Search onSuccess={(tracks) => handleSuccessSearch(tracks)}
