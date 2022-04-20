@@ -1,5 +1,6 @@
+import React from 'react';
 import './App.css';
-import Homework from './Homework/Data';
+import Homework from './Mindfy/Data';
 
 
 function App() {

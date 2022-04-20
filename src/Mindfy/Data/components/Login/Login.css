@@ -1,0 +1,27 @@
+.nav-login{
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+  }
+.login-container {
+    padding-top: 10px;
+    color: white;
+  }
+
+.login-container h2 {
+   padding-right: 20px;
+   text-align: center;
+   margin-top: 20px;
+   padding-bottom: 20px;
+}
+
+.container-isi{
+  color: white;
+  width: 700px;
+  height: 500px;
+  margin: 0 auto;
+}
+
+.container-isi h1{
+  padding-top: 20px;
+}

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import store from './Homework/Data/Redux/Store/store';
+import store from './Mindfy/Data/Redux/Store/store';
 
 ReactDOM.render(
   <React.StrictMode>
