@@ -1,9 +1,8 @@
-import { Button, FormControl, TextareaAutosize, TextField } from '@mui/material';
+import { Button, FormControl, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { addTracksPlaylist, createPlaylist } from '../../API/api';
-import { RootState } from '../../Redux/Store/store';
+import { RootState, useAppSelector } from '../../Redux/Store/store';
 
 interface Props {
   urisTrack: string[];
@@ -15,8 +14,8 @@ interface Playlist {
 }
 
 const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
-  const userToken: string = useSelector((state: RootState) => state.user.userToken);
-  const user: string = useSelector((state: RootState ) => state.user.user.id);
+  const userToken: string = useAppSelector((state: RootState) => state.user.userToken);
+  const user: string = useAppSelector((state: RootState ) => state.user.user.id);
   const [playlist, setPlaylist] = useState<Playlist>({
     title: '',
     description: '',

@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { searchTrack } from '../../API/api';
 import { RootState } from '../../Redux/Store/store';
+import { Track } from '../../types/globalInterface';
 
 interface Props {
-  handleSearch: (track: any[]) => void;
+  handleSearch: (track: Track[]) => void;
   handleClearSearch: () => void;
 }
 

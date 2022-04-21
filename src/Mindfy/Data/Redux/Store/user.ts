@@ -2,12 +2,12 @@ import {createSlice} from '@reduxjs/toolkit';
 
 interface InitialState {
     userToken: string;
-    user: any;
+    user: any
   }
 
   const initialState: InitialState = {
     userToken: '',
-    user: {},
+    user: {}
   };
 
 export const userSlice = createSlice({

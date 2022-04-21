@@ -7,11 +7,11 @@ interface URl {
   }
 
   const url: URl = {
-      API_URL_SPOTIFY: process.env.REACT_APP_SPOTIFY_ID,
+      API_URL_SPOTIFY: process.env.REACT_APP_SPOTIFY_ID as string,
+      REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI as string,
       SPOTIFY_AUTH_URL: 'https://accounts.spotify.com/authorize',
-      SPOTIFY_SCOPE: 'playlist-modify-private',
+      SPOTIFY_SCOPE: 'playlist-modify-private user-read-private',
       RESPONSE_TYPE: 'token',
-      REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI || process.env.VERCEL_URL as string,
   };
 
 // var client_id = process.env.REACT_APP_SPOTIFY_ID;

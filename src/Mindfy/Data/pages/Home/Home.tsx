@@ -3,11 +3,12 @@ import FormPlaylist from '../../components/Form/FormPlaylist';
 import Search from '../../components/Search/Search';
 import Logout from '../../components/Logout/Logout';
 import Tracks from '../../components/Tracks/Tracks';
+import { Track } from '../../types/globalInterface';
 
 const Home: React.FC = () =>{
-  const [tracks, setTracks] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [selectedTracksUri, setSelectedTracksUri] = useState<string[]>([]);
-  const [selectedTracks, setSelectedTracks] = useState<any[]>([]);
+  const [selectedTracks, setSelectedTracks] = useState<Track[]>([]);
   const [isInSearch, setIsInSearch] = useState<boolean>(false);
   const [messageTracks, setMessageTracks] = useState<string>('Tracks Not Found');
 
@@ -17,10 +18,10 @@ const Home: React.FC = () =>{
     }
   }, [selectedTracksUri, selectedTracks, isInSearch]);
 
-  const handleSearch: (searchTracks: any[]) => void = (searchTracks) => {
+  const handleSearch: (searchTracks: Track[]) => void = (searchTracks) => {
     setIsInSearch(true);
 
-    const selectedSearchTracks = searchTracks.filter((track: any) =>
+    const selectedSearchTracks = searchTracks.filter((track: Track) =>
       selectedTracksUri.includes(track.uri)
     );
 
@@ -33,12 +34,12 @@ const Home: React.FC = () =>{
     setIsInSearch(false);
   };
 
-  const handleSelected: (track: any) => void = (track) => {
+  const handleSelected: (track: Track) => void = (track) => {
     const uri = track.uri;
 
     if (selectedTracksUri.includes(uri)) {
-      setSelectedTracksUri(selectedTracksUri.filter((item: any) => item !== uri));
-      setSelectedTracks(selectedTracks.filter((item: any) => item.uri !== uri));
+      setSelectedTracksUri(selectedTracksUri.filter((item: string) => item !== uri));
+      setSelectedTracks(selectedTracks.filter((item: Track) => item.uri !== uri));
     } else {
       setSelectedTracksUri([...selectedTracksUri, uri]);
       setSelectedTracks([...selectedTracks, track]);
@@ -62,6 +63,7 @@ const Home: React.FC = () =>{
             <Tracks
               key={track.id}
               track={track.name}
+              duration={track.duration_ms}
               album={track.album.name}
               artist={track.album.artists[0].name}
               url={track.album.images[0].url}
