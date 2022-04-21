@@ -20,14 +20,11 @@ const Home: React.FC = () =>{
   const handleSearch: (searchTracks: any[]) => void = (searchTracks) => {
     setIsInSearch(true);
 
-    const selectedSearchTracks = searchTracks.filter((track) =>
+    const selectedSearchTracks = searchTracks.filter((track: any) =>
       selectedTracksUri.includes(track.uri)
     );
 
-    setTracks(() => {
-      const onTracks = [...new Set([...selectedSearchTracks, ...searchTracks])];
-      return onTracks;
-    });
+    setTracks([...new Set([...selectedSearchTracks, ...searchTracks])]);
   };
 
   const handleClearSearch: () => void = () => {
