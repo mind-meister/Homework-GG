@@ -44,16 +44,22 @@ const Login: React.FC= () => {
   return (
     <>
       <nav className='nav-login'>
-        <div className='login-container'>
-          <h2>Login With Spotify</h2>
-          <Button size='small' sx={{ width: 'auto', textAlign: 'center', borderRadius:2 , background:'#4caf50' }} type='submit' variant='contained' className='login' href={getSpotifykAuthorize()}>
-            Login
-          </Button>
+        <div className='container-nav'>
+          <h2>Mindfy</h2>
         </div>
         </nav>
 
+        <div className='container-login'>
+          <h2>Welcome to Modify!</h2>
+          <p>This project is a implementation of spotify playlist</p>
+          <Button className='button-login' size='small' sx={{ width: 'auto', textAlign: 'center', borderRadius:3 , background:'#4caf50' }} type='submit' variant='contained' href={getSpotifykAuthorize()}>
+            Login With Spotify
+          </Button>
+
+        </div>
+
         <div className='container-isi'>
-          <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus a nemo laudantium perferendis eveniet atque voluptates, sequi molestiae dignissimos. Ut blanditiis veniam sapiente vel nobis quasi fugit totam. Fugiat, animi?</h1>
+          <p>Created by © Charles Prabowo</p>
         </div>
     </>
   );

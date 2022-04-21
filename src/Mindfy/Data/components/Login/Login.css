@@ -1,27 +1,50 @@
 .nav-login{
     padding: 20px;
-    text-align: center;
     margin: 0 auto;
   }
-.login-container {
+.container-nav {
     padding-top: 10px;
     color: white;
   }
 
-.login-container h2 {
+.container-nav h2 {
    padding-right: 20px;
-   text-align: center;
-   margin-top: 20px;
    padding-bottom: 20px;
+   font-size: 30px;
+   padding-left: 100px;
+}
+
+.container-login{
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 200px;
+  width: auto;
+  height: 400px;
+}
+
+.container-login h2{
+  font-size: 40px;
+  padding-top: 10px;
+  color: white;
+  text-align: center;
+}
+
+.container-login p{
+  font-size: 15px;
+  padding-bottom: 30px;
+  padding-top: 10px;
+  color: white;
+  text-align: center;
 }
 
 .container-isi{
   color: white;
-  width: 700px;
-  height: 500px;
   margin: 0 auto;
+  text-align: center;
 }
 
-.container-isi h1{
-  padding-top: 20px;
+.container-isi p{
+  margin-top: 20px;
+  font-size: 12px;
+  font-style: italic;
 }
