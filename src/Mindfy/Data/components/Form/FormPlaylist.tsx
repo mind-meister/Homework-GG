@@ -71,6 +71,7 @@ const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
               name='title'
               variant='standard'
               value={playlist.title}
+              aria-label="input-title"
               sx={{background:'white', width: 400, borderRadius:3}}
               onChange={handleChange}
               required

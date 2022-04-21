@@ -7,8 +7,8 @@ interface URl {
   }
 
   const url: URl = {
-      API_URL_SPOTIFY: process.env.REACT_APP_SPOTIFY_ID as string,
-      REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI as string,
+      API_URL_SPOTIFY: process.env.REACT_APP_SPOTIFY_ID,
+      REDIRECT_URI: "http://localhost:3000",
       SPOTIFY_AUTH_URL: 'https://accounts.spotify.com/authorize',
       SPOTIFY_SCOPE: 'playlist-modify-private user-read-private',
       RESPONSE_TYPE: 'token',
