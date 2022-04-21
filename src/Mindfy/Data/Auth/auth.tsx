@@ -11,7 +11,7 @@ interface URl {
       SPOTIFY_AUTH_URL: 'https://accounts.spotify.com/authorize',
       SPOTIFY_SCOPE: 'playlist-modify-private',
       RESPONSE_TYPE: 'token',
-      REDIRECT_URI: 'http://localhost:3000' || process.env.VERCEL_URL as string
+      REDIRECT_URI: 'http://localhost:3000',
   };
 
 // var client_id = process.env.REACT_APP_SPOTIFY_ID;
