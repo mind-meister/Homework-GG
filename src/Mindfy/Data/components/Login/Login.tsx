@@ -51,7 +51,7 @@ const Login: React.FC= () => {
 
         <div className='container-login'>
           <h2>Welcome to Modify!</h2>
-          <p>This project is a implementation of spotify playlist</p>
+          <p>This project is spotify playlist</p>
           <Button className='button-login' size='small' sx={{ width: 'auto', textAlign: 'center', borderRadius:3 , background:'#4caf50' }} type='submit' variant='contained' href={getSpotifykAuthorize()}>
             Login With Spotify
           </Button>
