@@ -14,9 +14,13 @@ const Home: React.FC = () =>{
 
   useEffect(() => {
     if (!isInSearch) {
+      const selectedTracks: Track[] = filterSelectedTracks();
       setTracks(selectedTracks);
     }
-  }, [selectedTracksUri, selectedTracks, isInSearch]);
+  }, [selectedTracksUri]);
+
+  const filterSelectedTracks: () => Track[] = () =>
+    tracks.filter((track) => selectedTracksUri.includes(track.uri));
 
   const handleSearch: (searchTracks: Track[]) => void = (searchTracks) => {
     setIsInSearch(true);
@@ -63,7 +67,7 @@ const Home: React.FC = () =>{
             <Tracks
               key={track.id}
               track={track.name}
-              duration={track.duration_ms}
+              // duration={track.duration_ms}
               album={track.album.name}
               artist={track.album.artists[0].name}
               url={track.album.images[0].url}

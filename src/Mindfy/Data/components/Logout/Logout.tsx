@@ -14,17 +14,22 @@ const Logout: React.FC  = () => {
   
   return (
     <nav className='nav-logout'>
-      <div>
+      
+      <div className='button-logout'>
         <Button
           size='small'
           sx={{ width: 'auto', textAlign: 'center', background: '#4caf50', borderRadius:2  }}
           type='submit'
           variant='contained'
           onClick={logout}
-        >
+          >
           Logout
         </Button>
       </div>
+          <div>
+            <h2>Welcome To Mindfy</h2>
+            <p>Create Your Playlist Spotify</p>
+          </div>
     </nav>
   );
 };

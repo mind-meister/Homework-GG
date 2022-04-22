@@ -4,18 +4,19 @@ import { useSelector } from 'react-redux';
 import { searchTrack } from '../../API/api';
 import { RootState } from '../../Redux/Store/store';
 import { Track } from '../../types/globalInterface';
+import './Search.css';
 
 interface Props {
   handleSearch: (track: Track[]) => void;
   handleClearSearch: () => void;
 }
 
-const Search: React.FC<Props> = ({handleSearch, handleClearSearch}) => {
+const Search: React.FC<Props> = ({ handleSearch, handleClearSearch }) => {
   const userToken = useSelector((state: RootState) => state.user.userToken);
-  const [search , setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
   const [clearSearch, setclearSearch] = useState<boolean>(true);
 
-  const handleSubmit =  async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await searchTrack(search, userToken);
@@ -23,43 +24,75 @@ const Search: React.FC<Props> = ({handleSearch, handleClearSearch}) => {
       handleSearch(tracks);
       setclearSearch(false);
     } catch (error) {
-        console.log(error, 'Error Search');
+      console.log(error, 'Error Search');
     }
   };
-  const handleChange = (e: React.ChangeEvent) =>{
+  const handleChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLTextAreaElement;
     setSearch(target.value);
   };
-  const handleClear = () => {
+
+  const handleClear: () => void = () => {
     handleClearSearch();
     setSearch('');
     setclearSearch(true);
   };
   return (
     <>
-        {userToken ? (
-          <div className='tombol-search'>
-          <form onSubmit={handleSubmit}>
-            <Box p={1}>
-          <TextField variant='standard' style={{width:300, height:30, background:'white',borderRadius:10}} onChange={handleChange} type='text' placeholder='Input Song Name' />
-          <Button type='submit' variant='contained' sx={{ width: 100, height: 30, textAlign: 'center', background:'#4caf50', marginLeft:2, borderRadius:3}} placeholder='Search tracks'>Search</Button>
-          </Box>
-          </form>
-        </div>
-        ) : ( 
-          ''
-        )};
+      <div className='search-container'>
+        <form onSubmit={handleSubmit}>
+          <div className='search-form'>
+            <input
+              onChange={handleChange}
+              type='text'
+              placeholder='input your song...'
+              aria-label='search-input'
+              className='search-input'
+            />
+
+            <Button
+              type='submit'
+              variant='contained'
+              sx={{
+                width: 100,
+                height: 30,
+                textAlign: 'center',
+                background: '#4caf50',
+                borderRadius: 3,
+              }}
+              placeholder='Search tracks'
+              aria-label='search-button'
+              id='button-input'
+              className='button-input'
+            >
+              Search
+            </Button>
+          </div>
+        </form>
+      </div>
+
       {!clearSearch && (
         <div className='clear-search'>
-
-        <Box p={1}>
-          <Button size='small' sx={{ width: 210, textAlign: 'center', borderRadius:3, background:'#4caf50' }} onClick={handleClear} variant='contained'>Clear search</Button>
-        </Box>
+          <Box p={1}>
+            <Button
+              size='small'
+              sx={{
+                width: 210,
+                textAlign: 'center',
+                borderRadius: 3,
+                background: '#4caf50',
+              }}
+              onClick={handleClear}
+              variant='contained'
+              data-testid='button-clearSearch'
+            >
+              Clear Search
+            </Button>
+          </Box>
         </div>
-      )};
+      )}
     </>
   );
 };
 
 export default Search;
-

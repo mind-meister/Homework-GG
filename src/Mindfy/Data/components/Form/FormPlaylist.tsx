@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { addTracksPlaylist, createPlaylist } from '../../API/api';
 import { RootState, useAppSelector } from '../../Redux/Store/store';
+import './FormPlaylist.css';
 
 interface Props {
   urisTrack: string[];
@@ -57,44 +58,34 @@ const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className='container-form'>
-
-          <Box p={1} width='100%'>
-          <FormControl>
-            <h1>
-              Create A New playlist
-            </h1>
+            <h2>
+              Create A New Playlist
+            </h2>
           
             <p>Playlist Title</p>
-            <TextField
+            <input
               min-length={10}
               type='text'
               name='title'
-              variant='standard'
               value={playlist.title}
               aria-label="input-title"
-              sx={{background:'white', width: 400, borderRadius:3}}
               onChange={handleChange}
+              data-testid="form-input"
               required
               />
           
-            <p className='description-form'>Description</p>
+            <p>Description</p>
             <textarea
               name='description'
               value={playlist.description}
               onChange={handleChange}
-              style={{ width: 400, height:100 ,borderRadius:10 }}
+              data-testid="form-description"
               >
               </textarea>
-              </FormControl>
-              </Box>
         </div>
 
         <div className='button-form'>
-
-        
-        <Box p={1} width='100%'>
-          <Button size='small' sx={{ width: 400, textAlign: 'center', borderRadius:3, background:'#4caf50' }} type='submit' variant='contained'>Submit</Button>
-        </Box>
+          <Button variant='contained' type='submit'>SUBMIT</Button>
         </div>
 
       </div>
