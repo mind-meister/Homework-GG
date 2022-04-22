@@ -11,7 +11,7 @@ interface URl {
       SPOTIFY_AUTH_URL: 'https://accounts.spotify.com/authorize',
       SPOTIFY_SCOPE: 'playlist-modify-private',
       RESPONSE_TYPE: 'token',
-      REDIRECT_URI: 'https://mindfy.vercel.app/'
+      REDIRECT_URI: process.env.REACT_APP_REDIRECT_URI as string
   };
 
 // var client_id = process.env.REACT_APP_SPOTIFY_ID;
