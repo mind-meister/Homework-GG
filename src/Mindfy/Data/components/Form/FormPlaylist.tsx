@@ -1,9 +1,10 @@
-import { Button, FormControl, TextField } from '@mui/material';
+import { Alert, Button, FormControl, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { addTracksPlaylist, createPlaylist } from '../../API/api';
 import { RootState, useAppSelector } from '../../Redux/Store/store';
 import './FormPlaylist.css';
+import swal from 'sweetalert';
 
 interface Props {
   urisTrack: string[];
@@ -41,13 +42,25 @@ const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
 
           await addTracksPlaylist(userToken, responseCreatePlaylist.id, urisTrack);
           
-          alert('Playlist created successfully');
+          swal({
+            text: 'Playlist created successfully',
+            icon: 'success',
+            timer: 3000,
+          });
           setPlaylist({ title: '', description: '' });
         } catch (e) {
-          alert('Please select at least one track');
+          swal({
+            text: 'Please select at least one track',
+            icon: 'warning',
+            timer: 3000,
+          });
         }
       } else {
-        alert('Title must be at least 10 characters long.');
+        swal({
+          text: 'Title must be at least 10 characters long',
+          icon: 'warning',
+          timer: 3000,
+        });
       }
     
   };

@@ -1,9 +1,9 @@
 # Mindfy - Create Playlist
 
-This is my final project submission for [#GenerasiGigih].
+This is my final project submission for GenerasiGigih.
 
 <p align="center">
-  <img src="/src/Mindfy/Data/img/preview.png" alt='preview'>
+  <img src="/public/img/preview.png" alt='preview'>
 </p>
 
 <p align="center">
