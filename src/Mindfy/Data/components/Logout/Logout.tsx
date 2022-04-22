@@ -28,7 +28,7 @@ const Logout: React.FC  = () => {
       </div>
           <div>
             <h2>Welcome To Mindfy</h2>
-            <p>Create Your Playlist Spotify</p>
+            <p>Create Your Playlist</p>
           </div>
     </nav>
   );
