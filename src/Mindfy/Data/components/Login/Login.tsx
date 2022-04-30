@@ -59,7 +59,7 @@ const Login: React.FC= () => {
         </div>
 
         <div className='container-isi'>
-          <p>Created by ©Charles Prabowo</p>
+          <p>Created by ©2022 Charles Prabowo</p>
         </div>
     </>
   );
