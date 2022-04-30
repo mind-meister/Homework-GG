@@ -14,6 +14,7 @@ interface Playlist {
   description: string;
 }
 
+
 const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
   const userToken: string = useAppSelector((state: RootState) => state.user.userToken);
   const user: string = useAppSelector((state: RootState ) => state.user.user.id);
@@ -32,28 +33,37 @@ const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-      if (playlist.title.length > 10) {
-        try {
-          const responseCreatePlaylist = await createPlaylist(userToken, user, {
-            name: playlist.title,
-            description: playlist.description,
-          });
 
-          await addTracksPlaylist(userToken, responseCreatePlaylist.id, urisTrack);
-          
-          swal({
-            text: 'Playlist created successfully',
-            icon: 'success',
-            timer: 3000,
-          });
-          setPlaylist({ title: '', description: '' });
-        } catch (e) {
+      if (playlist.title.length > 10 ){
+        if (urisTrack.length > 0) {
+          try {
+            const responseCreatePlaylist = await createPlaylist(userToken, user, {
+              name: playlist.title,
+              description: playlist.description,
+            });
+  
+            await addTracksPlaylist(userToken, responseCreatePlaylist.id, urisTrack);
+            
+            setPlaylist({ title: '', description: '' });
+            swal({
+              text: 'Playlist created successfully',
+              icon: 'success',
+              timer: 3000,
+            });
+          } catch (error) {
+            swal({
+              text: 'Error',
+              icon: 'danger',
+              timer: 3000,
+            });
+          }
+        } else {
           swal({
             text: 'Please select at least one track',
             icon: 'warning',
             timer: 3000,
           });
-        }
+        } 
       } else {
         swal({
           text: 'Title must be at least 10 characters long',
@@ -61,6 +71,7 @@ const FormPlaylist: React.FC<Props> = ({ urisTrack }) => {
           timer: 3000,
         });
       }
+
     
   };
 
